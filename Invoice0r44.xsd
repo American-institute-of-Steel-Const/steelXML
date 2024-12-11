@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://www.aisc.org/globalassets/aisc/steelxml/steelXML.xsl"?>
+<!--<?xml-stylesheet type="text/xsl" href="steelXML.xsl"?>-->
+
+<xs:schema targetNamespace="AISCProcurement" xmlns="AISCProcurement"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  attributeFormDefault="unqualified">
+  <xs:annotation>
+    <xs:documentation>
+      <h1>Invoice sub schema version 0r44</h1>
+      <br/>
+      <br/>
+      <br/>
+      <h1>Revision History </h1>
+      <h2>version 0r44</h2>
+      <ul>
+        <li>Updated Baseline Schema version and URL</li>
+      </ul>
+      <h2>version 0r43</h2>
+      <ul>
+        <li>First Release</li>
+      </ul>
+    </xs:documentation>
+  </xs:annotation>
+  <!--<xs:include schemaLocation="https://www.aisc.org/globalassets/aisc/steelxml/Baseline0r44.xsd"/>-->
+  <xs:include schemaLocation="Baseline0r44.xsd"/>
+
+  <xs:element name="Invoice" type="tBL"/>
+
+  <xs:complexType name="tBL">
+    <xs:complexContent>
+      <xs:restriction base="tProcurement">
+        <xs:sequence>
+          <xs:element name="Header" type="etHeader" minOccurs="1"/>
+          <xs:element name="Body" type="etBody" minOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etHeader">
+    <xs:complexContent>
+      <xs:restriction base="tHeader">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="BillOfLadingReference" type="xs:string"/>
+          <xs:element minOccurs="1" name="TransactionDateTime" type="xs:dateTime"/>
+          <xs:element name="SourceApplicationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="SourceApplicationVersion" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Invoicing" type="etInvoicing" minOccurs="1"/>
+          <xs:element name="Supplier" type="etSupplier" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="SoldTo" type="etCustomer" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="ShipTo" type="etCustomerGeneral" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="BillTo" type="etCustomerGeneral" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Carrier" type="tCarrier" minOccurs="1" maxOccurs="1"/>
+          <xs:element minOccurs="0" name="ShipmentMode" type="xs:string"/>
+          <xs:element minOccurs="0" name="ShipmentType" type="tShippingType"/>
+          <xs:element minOccurs="1" name="ShipmentDateTime" type="xs:dateTime"/>
+          <xs:element name="VehicleID" type="xs:string"/>
+          <xs:element minOccurs="1" name="ShipmentWeight" type="tWeight"/>
+          <xs:element minOccurs="0" name="TareWeight" type="tWeight"/>
+          <xs:element minOccurs="0" name="Waypoint" type="xs:string"/>
+          <xs:element minOccurs="0" name="OrderDueDate" type="xs:dateTime"/>
+          <xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+
+
+  <xs:complexType name="etInvoicing">
+    <xs:complexContent>
+      <xs:restriction base="tInvoicing">
+        <xs:sequence>
+          <xs:element name="InvoiceIssued" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="InvoiceReceived" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="PaymentStatus" type="tPaymentStatus" minOccurs="0"/>
+          <xs:element name="InvoiceNo" type="xs:string" minOccurs="0"/>
+          <xs:element name="InvoiceLineNo" type="xs:string" minOccurs="1"/>
+          <xs:element name="TotalInvoiced" type="tCurrency" minOccurs="1"/>
+          <xs:element name="Subtotals" type="tSubtotals" minOccurs="1"/>
+          <xs:element name="InvoiceDate" type="xs:dateTime" minOccurs="1"/>
+          <xs:element name="DiscountAmount" type="tPriceWithDescription" minOccurs="0"
+            maxOccurs="unbounded"/>
+          <xs:element name="DiscountDeadlineDate" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="eSubtotals">
+    <xs:complexContent>
+      <xs:restriction base="tSubtotals">
+        <xs:sequence>
+          <xs:element name="BasePrice" type="etPriceWithSurcharges" minOccurs="1"/>
+          <xs:element name="Freight" type="etPriceWithSurcharges" minOccurs="1"
+            maxOccurs="unbounded"/>
+          <xs:element name="SupplementalPrices" type="tPriceWithDescription" minOccurs="1"
+            maxOccurs="unbounded"/>
+          <xs:element name="Tax" type="tPriceWithDescription" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etPriceWithSurcharges">
+    <xs:complexContent>
+      <xs:restriction base="tPriceWithSurcharges">
+        <xs:sequence>
+          <xs:element name="Price" type="tCurrency" minOccurs="1"/>
+          <xs:element name="Surcharge" type="etSurcharge" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="etSurcharge">
+    <xs:complexContent>
+      <xs:restriction base="tSurcharge">
+        <xs:sequence>
+          <xs:element name="Description" type="xs:string" minOccurs="0"/>
+          <xs:element name="Price" type="tCurrency" minOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+
+  </xs:complexType>
+
+
+
+
+  <xs:complexType name="etSupplier">
+    <xs:complexContent>
+      <xs:restriction base="tSupplier">
+        <xs:sequence>
+          <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Address" type="tAddress" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Contact" type="etContact" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="InventoryLocation" type="tAddress" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="etContact">
+    <xs:complexContent>
+      <xs:restriction base="tContact">
+        <xs:sequence>
+          <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Department" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Title" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Telephone" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Fax" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Email" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="etCustomerGeneral">
+    <xs:complexContent>
+      <xs:restriction base="tCustomerGeneral">
+        <xs:sequence>
+          <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="CustomerID" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element minOccurs="0" name="SupplierDUNS" type="tNineDigitNumber"/>
+          <xs:element name="Address" type="tAddress" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Contact" type="etContact" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etCustomer">
+    <xs:complexContent>
+      <xs:restriction base="tCustomer">
+
+        <xs:sequence minOccurs="1" maxOccurs="1">
+          <xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="1"/>
+        </xs:sequence>
+
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+
+  <xs:complexType name="etCarrier">
+    <xs:complexContent>
+      <xs:restriction base="tCarrier">
+        <xs:sequence>
+          <xs:element name="Name" type="xs:string" minOccurs="1"/>
+          <xs:element name="CarrierID" type="tCarrierID" minOccurs="1"/>
+          <xs:element name="Address" type="tAddress" minOccurs="0"/>
+          <xs:element name="Contact" type="tContact" minOccurs="0"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+
+  </xs:complexType>
+
+
+  <xs:complexType name="etOrderInformation">
+    <xs:complexContent>
+      <xs:restriction base="tOrderInformation">
+        <xs:sequence>
+          <xs:element name="TransactionAndOrder" type="etTransactionAndOrder" minOccurs="1"
+            maxOccurs="1"/>
+          <xs:element name="MaterialOrderIdentification" type="etMaterialOrderIdentification"
+            minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etTransactionAndOrder">
+    <xs:complexContent>
+      <xs:restriction base="tTransactionAndOrder">
+        <xs:sequence>
+          <xs:element name="SupplierOrderNumber" type="xs:string" minOccurs="1"
+            maxOccurs="unbounded"/>
+          <xs:element name="OrderType" type="tOrderType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="SpecificRequirement" type="xs:string" minOccurs="0"
+            maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etMaterialOrderIdentification">
+    <xs:complexContent>
+      <xs:restriction base="tMaterialOrderIdentification">
+        <xs:sequence>
+          <xs:element name="Customers" type="etMaterialCustomer" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etMaterialCustomer">
+    <xs:complexContent>
+      <xs:restriction base="tMaterialCustomer">
+        <xs:sequence>
+          <xs:element name="OpportunityIdentifier" type="xs:token" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etMaterial">
+    <xs:complexContent>
+      <xs:restriction base="tMaterial">
+        <xs:sequence>
+          <xs:element name="PreliminaryPieceMarks" type="xs:string" minOccurs="0"
+            maxOccurs="unbounded"/>
+          <xs:element name="FinalPieceMarks" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="ReceivingLocation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="BundleOrPieceTagNumber" type="xs:string" minOccurs="0"
+            maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- BODY -->
+  <!-- BODY -->
+  <!-- BODY -->
+
+  <xs:complexType name="etBody">
+    <xs:complexContent>
+      <xs:restriction base="tBody">
+        <xs:sequence>
+          <xs:element maxOccurs="1" name="Orders" type="etOrders"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etOrders">
+    <xs:complexContent>
+      <xs:restriction base="tOrders">
+        <xs:sequence>
+          <xs:element maxOccurs="1" name="Order" type="etOrder"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etOrder">
+    <xs:complexContent>
+      <xs:restriction base="tOrder">
+        <xs:sequence>
+          <xs:element minOccurs="1" name="OrderInformation" type="etOrderInformation"/>
+          <xs:element maxOccurs="unbounded" name="Item" type="etItem"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etItem">
+    <xs:complexContent>
+      <xs:restriction base="tItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ItemURN" type="tItemURN"/>
+          <xs:element name="GUIDs" type="tGuids" minOccurs="0"/>
+          <xs:element minOccurs="1" name="CustomerPurchaseOrder" type="xs:string"/>
+          <xs:element minOccurs="1" name="CustomerPurchaseOrderLine" type="xs:string"/>
+          <xs:element minOccurs="1" name="Qty" type="tOrderUnit"/>
+          <xs:element minOccurs="0" name="CustomerProductCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="Length" type="tLength"/>
+          <xs:element minOccurs="0" name="Width" type="tLength"/>
+          <xs:element minOccurs="0" name="Weight" type="tWeightWithQualifier"/>
+          <xs:element minOccurs="0" name="Thickness" type="tLength"/>
+          <xs:element name="Materials" type="etMaterial" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Projects" type="tMaterialProject" minOccurs="0" maxOccurs="1"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="Sequence" type="xs:string"/>
+          <xs:element name="AdditionalFile" minOccurs="0" maxOccurs="unbounded" type="xs:anyURI"/>
+          <xs:element name="Shape" type="xs:token" minOccurs="1"/>
+          <xs:element name="Size" type="xs:token" minOccurs="1"/>
+          <xs:element name="Grade" type="tGrade" minOccurs="1"/>
+          <xs:element minOccurs="0" name="SupplierURN" type="tSupplierURN"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="SupplementalRequirements"
+            type="tSupplementalRequirements"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="Schedule" type="etSchedule"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="PricingInformation"
+            type="etPricingInformation"/>
+          <xs:element minOccurs="0" name="Notes" type="xs:string"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="etSchedule">
+    <xs:complexContent>
+      <xs:restriction base="tSchedule">
+        <xs:sequence>
+          <xs:element name="ActualDate" type="tActualDate" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="etPricingInformation">
+    <xs:complexContent>
+      <xs:restriction base="tPricingInformation">
+        <xs:sequence>
+          <xs:element name="MaterialPrice" type="etMaterialPrice" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="FreightPrice" type="etFreightPrice" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etMaterialPrice">
+    <xs:complexContent>
+      <xs:restriction base="tMaterialPrice">
+        <xs:sequence>
+          <xs:element name="BasePrice" type="tBasePriceUnit" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="SurchargePrice" type="tSurchargePrice" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Extras" type="tExtras" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="Terms" type="tTerms" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="etFreightPrice">
+    <xs:complexContent>
+      <xs:restriction base="tFreightPrice">
+        <xs:sequence>
+          <xs:element name="BaseFreightPrice" type="tFreightBasePrice" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="SurchargePrice" type="tFreightBasePrice" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="SupplimentaryFreightPrice" type="tSupplimentaryFreightPrice"
+            minOccurs="0" maxOccurs="1"/>
+          <xs:element name="FOBPoint" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Method" type="tMethod" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+</xs:schema>

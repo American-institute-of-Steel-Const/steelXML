@@ -1,0 +1,2252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://www.aisc.org/globalassets/aisc/steelxml/steelXML.xsl"?>
+<!--<?xml-stylesheet type="text/xsl" href="steelXML.xsl"?>-->
+
+<xs:schema xmlns="AISCProcurement" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="AISCProcurement" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			<h1>Baseline schema version 0r44</h1>
+			<p>The main schema contains all types that define the unit of exchanges. Exchange
+				specific sub schema specializes the baseline types according to its purpose. Thus,
+				the main schema (Baseline.xsd) can be referenced from the sub schema files of
+				transaction domains consist of: - Availability Inquiry, RFQ, Purchase Order, Order
+				Status, ASN, MTR, Invoice, Payment, Sustainability, and Bill of Lading.</p>
+			<br/>
+			<br/>
+			<br/>
+			<h1>Revision History </h1>
+			<h2>version 0r44</h2>
+			<ul>
+				<li>Added descriptions to elements according to 2018 September Denver meeting</li>
+				<li>Changed schema location to https://www.aisc.org/globalassets/aisc/steelxml/ from
+					http://dcom.arch.gatech.edu/aisc/xml/</li>
+				<li>Added XSLT stylesheet (steelXML01.xsl) for web broswer reading</li>
+				<li>Removed Length limit of 50 charactor on CommentForItem, removed
+					tItemCommentLength</li>
+				<li>Removed tCTL</li>
+
+			</ul>
+			<h2>version 0r43</h2>
+			<ul>
+				<li>Finish element's Finishtype element is changed to text field </li>
+				<li>Finish element is moved to under new Finishes element</li>
+				<li>ShipmentDateTime / ShipmentDateTimeComplex is now optional</li>
+				<li>tAddressContact's Address and Contact elements' minOccurs are set to 0 </li>
+			</ul>
+			<h2>version 0r42</h2>
+			<ul>
+				<li>ExpectedDeliveryDate element is added to tHeader as an optional value.</li>
+			</ul>
+			<h2>version 0r41</h2>
+			<ul>
+				<li>Width element is added to tItem for plate or sheet.</li>
+			</ul>
+			<h2>version 0r40</h2>
+			<ul>
+				<li>OrderSize element in tTransactionAndOrder is removed.</li>
+			</ul>
+			<h2>version 0r39</h2>
+			<ul>
+				<li>tGrade is added to speficify attributes.</li>
+				<li>tElementCode definition is separated to ElementCode schema</li>
+				<li>Country Code restricts element value instead of attribute values</li>
+				<li>Country Code, Currency Code, and ElementCode schema files use version
+					suffix.</li>
+			</ul>
+			<h2>version 0r38</h2>
+			<ul>
+				<li>tShape, tSize and tGrade are changed to xs:token without any restriction.</li>
+				<li>Following schemas are no longer used : AISCGrade.xsd, AISCShape.xsd,
+					AISCSize14_1.xsd, AISCSize14_1H.xsd, EuropeanSize.xsd, Grade.xsd,
+					IntermediateCaller.xsd, and Shape.xsd</li>
+			</ul>
+			<h2>version 0.37 </h2>
+			<ul>
+				<li>tShape, tSize, and tGrade are updated to new structure. Grade is now an
+					immediate sub element of tItem</li>
+				<li>GUID is replaced with GUIDs as an item represents multiple model objects of same
+					types.</li>
+			</ul>
+			<h2>version 0.36</h2>
+			<ul>
+				<li>removed stAddress for tSupplier and replaced with tAddress.</li>
+				<li>tSupplier refers to tAddress removed UOM element in tPreprocessingPrice.</li>
+				<li>tTemperature's UOM attribute can be either F or C, instead of "Degrees
+					Fahrenheit" or "Degrees Centigrade".</li>
+				<li>tFreightSurchargePrice is renamed to tFreightFuelSurcharge and element attribute
+					"Type" is removed.</li>
+				<li>tThickness is now substituted with tLength.</li>
+				<li>tOrderUnitEnum is now tLengthWeightCountUOM</li>
+				<li>tLengthPercentEnum is now LengthPercentUOM</li>
+				<li>tPreProcessingUOMEnum is now tPcCwtUOM</li>
+				<li>etPreProcessingUOMEnum is now tPcEaCwtUOM</li>
+				<li>Grade under tStandardShape is moved under tItem after Shape</li>
+				<li>DrillsOrPunches in tPreProcesssing is now Holes</li>
+				<li>tDrilledOrPunchedAdditionalInfo is now tHole</li>
+				<li>DrillsOrPunches in tHole is now CuttingMethod</li>
+				<li>tDrillsOrPunches is now tCuttingMethod</li>
+				<li>the contents of tDrilledOrPunched is now appended into tHole as a child element,
+					and tDrilledOrPunched is removed.</li>
+				<li>tHoleLocation is now xs:simpleType</li>
+				<li>tSplittingTeesAdditionalInfo is now tSplittingTee and updated.</li>
+				<li>tCutTosizes and tCutToSizesAdditionalInfo are removed and tCutTosize is
+					updated.</li>
+				<li>tProcessing directly refers tCutTosize instead of
+					tCutToSizesAdditionalInfo.</li>
+			</ul>
+		</xs:documentation>
+	</xs:annotation>
+	<!--<xs:include schemaLocation="CountryCode0r43.xsd">-->
+	<xs:include schemaLocation="https://www.aisc.org/globalassets/aisc/steelxml/CountryCode0r44.xsd">
+		<xs:annotation>
+			<xs:documentation>This schema is referencing the country code schema.
+			</xs:documentation>
+		</xs:annotation>
+
+	</xs:include>
+	<!--<xs:include schemaLocation="CurrencyCode0r43.xsd">-->
+	<xs:include
+		schemaLocation="https://www.aisc.org/globalassets/aisc/steelxml/CurrencyCode0r43.xsd">
+		<xs:annotation>
+			<xs:documentation>This schema is referencing the currency code schema.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:include>
+
+	<!--<xs:include schemaLocation="ElementCode0r43.xsd">-->
+	<xs:include schemaLocation="https://www.aisc.org/globalassets/aisc/steelxml/ElementCode0r43.xsd">
+		<xs:annotation>
+			<xs:documentation>This schema is referencing the currency code schema.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:include>
+
+	<!-- ROOT  -->
+	<xs:complexType name="tProcurement">
+		<xs:annotation>
+			<xs:documentation>The tProcurement type is a base type for the Root Element consisting
+				of the Header element and the Body element.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Header" type="tHeader">
+				<xs:annotation>
+					<xs:documentation>The Header element contains general information of a
+						transaction regarding a buyer and a supplier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Body" type="tBody">
+				<xs:annotation>
+					<xs:documentation>The Body element contains general information of a
+						transaction regarding a buyer and a supplier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER -->
+	<xs:complexType name="tHeader">
+		<xs:annotation>
+			<xs:documentation>The tHeader type describes all information applicable to the
+				exchange.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- ASN -->
+			<xs:element name="BillOfLadingReference" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element is a reference to the associated Bill of Lading
+						document.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionDateTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is for the date this steelXML file is
+						gnenerated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionStatus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The transaction status could be one of the following:
+						Fulfillment (Rolling, In Inventory) and Order (Order Prepared, Order Sent,
+						Order Received, Order Committed, Order Cancelled, Cancellation Confirmed,
+						Order Declined, Unable to place Loaded, Shipped, Delivered, Received,
+						Receipt Refused).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- End ASN -->
+			<xs:element name="SourceApplicationName" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element is used to note what software created the file.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SourceApplicationVersion" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element is used to note the version of software that
+						created the file.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Invoicing" type="tInvoicing" minOccurs="0"/>
+			<xs:element name="Supplier" type="tSupplier" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SoldTo" type="tCustomer" minOccurs="0"/>
+			<xs:element name="ShipTo" type="tCustomerGeneral" minOccurs="0"/>
+			<xs:element name="BillTo" type="tCustomerGeneral" minOccurs="0"/>
+			<xs:element name="Producer" type="tProducerAddresses" minOccurs="0"/>
+			<xs:element name="Carrier" type="tCarrier" minOccurs="0"/>
+			<!-- ASN -->
+			<xs:element name="ShipmentMode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Shipment mode can be either Truck, Rail, Barge, or Transload.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipmentType" type="tShippingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Shipment type can be either Prepaid or Collect.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For representing Shipment DateTime, two options are
+						available: ShipmentDateTime and ShipmentDateTimeComplex.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="ShipmentDateTime" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date and Time are specified in one element. (i.e.
+							2002-05-30T09:00:00)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ShipmentDateTimeComplex" type="tDateTimeComplex" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Date and Time can be separatly specified.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="VehicleID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents the vehicle identification number
+						such as railcar number, truck number, and etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipmentWeight" type="tWeight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Material weight</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TareWeight" type="tWeight" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Weight of the empty truck (vehicle)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Waypoint" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the shipment waypoint such as Customer,
+						Supplier, and additional Stops</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- End ASN -->
+			<xs:element name="OrderDueDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element minOccurs="0" name="ExpectedDeliveryDate" type="xs:dateTime"/>
+			<xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element contains additional information.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_INVOICING -->
+	<xs:complexType name="tInvoicing">
+		<xs:sequence>
+			<xs:element name="InvoiceIssued" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="InvoiceReceived" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="PaymentStatus" type="tPaymentStatus" minOccurs="0"/>
+			<xs:element name="InvoiceNo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Payables print the number of the invoice.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvoiceLineNo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reports print Invoice, if the problem is at the invoice
+						level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalInvoiced" type="tCurrency" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element gives the total amount of price invoiced.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Subtotals" type="tSubtotals" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Subtotals element contains categorized prices including
+						Base Price, Surcharge, Freight, Tax and other costs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InvoiceDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>InvoiceDate indicates the date invoice terms are
+						calculated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiscountAmount" type="tPriceWithDescription" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>check if discount amount is also on item
+						level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiscountDeadlineDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the due date when a discounted price is
+						available.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_SUPPLIER -->
+	<xs:complexType name="tSupplier">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This type plays a role in restricting the number of string to
+						nine digits.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="tAddress" minOccurs="0"/>
+			<xs:element name="Contact" type="tContact" minOccurs="0"/>
+			<xs:element name="InventoryLocation" type="tAddress" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Inventory Location is the point where shipping is
+						orignated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_SOLDTO/SHIPTO/BILLTO -->
+	<xs:complexType name="tCustomerGeneral">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="CustomerID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Customer ID is used to identify customers.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This nine digit DUNS number (for Data Universal Numbering
+						System) is a unique identifier for suppliers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="tAddress" minOccurs="0"/>
+			<xs:element name="Contact" type="tContact" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCustomer">
+		<xs:annotation>
+			<xs:documentation>The tCustomer has four different representation options depending on
+				the mandatory value, which can be Name, Customer ID, Supplier DUNS, or a combination
+				of Address and Contact.</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="1" maxOccurs="1">
+			<xs:sequence minOccurs="0" maxOccurs="1">
+				<xs:element name="Name" type="xs:string" minOccurs="1"/>
+				<xs:element name="CustomerID" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Customer ID is used to identify customers.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>This nine digit DUNS number (for Data Universal Numbering
+							System) is a unique identifier for suppliers.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Address" type="tAddress" minOccurs="0"/>
+				<xs:element name="Contact" type="tContact" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence minOccurs="0" maxOccurs="1">
+				<xs:element name="CustomerID" type="xs:string" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Customer ID is used to identify customers.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>This nine digit DUNS number (for Data Universal Numbering
+							System) is a unique identifier for suppliers.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Address" type="tAddress" minOccurs="0"/>
+				<xs:element name="Contact" type="tContact" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence minOccurs="0" maxOccurs="1">
+				<xs:element name="SupplierDUNS" type="tNineDigitNumber" minOccurs="1">
+					<xs:annotation>
+						<xs:documentation>This nine digit DUNS number (for Data Universal Numbering
+							System) is a unique identifier for suppliers.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Address" type="tAddress" minOccurs="0"/>
+				<xs:element name="Contact" type="tContact" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence minOccurs="0" maxOccurs="1">
+				<xs:element name="Address" type="tAddress" minOccurs="1"/>
+				<xs:element name="Contact" type="tContact" minOccurs="1"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<!-- HEADER_PRODUCER -->
+	<xs:complexType name="tProducerAddresses">
+		<xs:annotation>
+			<xs:documentation>The Producer Address can be SalesOffice (which can have an address
+				and contact information), MeltShop (which can have an address), or RollingMill
+				(which can have an address).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="SalesOffice" type="tAddressContact" minOccurs="0"/>
+			<xs:element name="MeltShop" type="tAddress" minOccurs="0"/>
+			<xs:element name="RollingMill" type="tAddress" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_CARRIER -->
+	<xs:complexType name="tCarrier">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="CarrierID" type="tCarrierID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This type restricts the length of Carrier ID from two to four
+						digits.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="tAddress" minOccurs="0"/>
+			<xs:element name="Contact" type="tContact" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_ORDERINFORMATION -->
+	<xs:complexType name="tOrderInformation">
+		<xs:annotation>
+			<xs:documentation>The OrderInformation element illustrates order specifications and
+				details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TransactionAndOrder" type="tTransactionAndOrder" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains order size, unit of measure, supplier
+						order number, order type, order logic, and requirements.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaterialOrderIdentification" type="tMaterialOrderIdentification"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains Customer related identifiers, such as
+						Customer PO Number, Customer PO Line Number, Opportunity Identifier, and RFQ
+						Number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionStatus" type="tTransactionStatus" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The status of transaction can be one of the following:
+						Fulfillment (Rolling, In Inventory) and Order (Order Prepared, Order Sent,
+						Order Received, Order Committed, Order Cancelled, Cancellation Confirmed,
+						Order Declined, Unable to place Loaded, Shipped, Delivered, Received,
+						Receipt Refused).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_ORDERINFORMATION_TRANSACTIONANDORDER -->
+	<xs:complexType name="tTransactionAndOrder">
+		<xs:sequence>
+			<!--
+				removed in v0r42 update
+				<xs:element name="OrderSize" type="tOrderSize" minOccurs="0"/>
+			-->
+			<xs:element name="SupplierOrderNumber" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="OrderType" type="tOrderType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>OrderType, for exmple, Spot Buy and VMI (Vendor Managed
+						Inventory).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderLogic" type="tOrderLogic" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>OrderLogic can be one of the following: Minimum order
+						(bundle), Is nesting (multing) required?, Restock?, Restock code # per
+						Bundle, Minimum Shipping Weight, Minimum Truck Freight Weight, and Minimum
+						Rail Freight Weight.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecificRequirement" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>SpecificRequirement describes additional instructions such as
+						“Must have 4x4 blocking” or “5 ton lift maximum”.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_ORDERINFORMATION_MATERIALORDERIDENTIFICATION -->
+	<xs:complexType name="tMaterialOrderIdentification">
+		<xs:sequence>
+			<xs:element name="Customers" type="tMaterialCustomer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Opportunity Identifier and RFQ Number can be contained to
+						identify orders from customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER_ORDERINFORMATION_TRANSACTIONSTATUS -->
+	<xs:complexType name="tTransactionStatus">
+		<xs:sequence>
+			<xs:element name="Fulfillment" type="tFulfillment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents the status of fulfillment: Rolling or
+						In Inventory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- Revision 12.17.13 -->
+			<xs:element name="OrderStatus" type="tOrderStatus" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tShippingType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Prepaid"/>
+			<xs:enumeration value="Collect"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- LEAVES -->
+	<xs:simpleType name="tPaymentStatus">
+		<xs:annotation>
+			<xs:documentation>PaymentStatus element can have information with regard to Paid,
+				Unpaid, and Partial paid.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Paid"/>
+			<xs:enumeration value="Unpaid"/>
+			<xs:enumeration value="Partial"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tSubtotals">
+		<xs:annotation>
+			<xs:documentation>This element can contain categorized prices including Base Price,
+				Surcharge, Freight, Tax and other costs.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BasePrice" type="tPriceWithSurcharges" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The BasePrice element represents a base price and other
+						surcharges.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Freight" type="tPriceWithSurcharges" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The Freight element represents a freight price and other
+						surcharges.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementalPrices" type="tPriceWithDescription" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="Tax" type="tPriceWithDescription" minOccurs="0" maxOccurs="unbounded"
+			/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tPriceWithDescription">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Price" type="tCurrency"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tPriceWithSurcharges">
+		<xs:sequence>
+			<xs:element name="Price" type="tCurrency" minOccurs="1"/>
+			<xs:element name="Surcharge" type="tSurcharge" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tSurcharge">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:element name="Price" type="tCurrency" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tNineDigitNumber">
+		<xs:annotation>
+			<xs:documentation>This type plays a role for restricting the number of string as a nine
+				digit.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="000000000"/>
+			<xs:maxInclusive value="999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tAddressContact">
+		<xs:sequence>
+			<xs:element name="Address" type="tAddress" minOccurs="0"/>
+			<xs:element name="Contact" type="tContact" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tAddress">
+		<xs:sequence>
+			<xs:element name="AddressLine" type="xs:string" maxOccurs="5"/>
+			<xs:element name="City" type="xs:string"/>
+			<xs:element name="State" type="xs:string"/>
+			<xs:element name="PostalCode" type="xs:string"/>
+			<xs:element ref="Country"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tContact">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Department" type="xs:string" minOccurs="0"/>
+			<xs:element name="Title" type="xs:string" minOccurs="0"/>
+			<xs:element name="Telephone" type="xs:string" minOccurs="0"/>
+			<xs:element name="Fax" type="xs:string" minOccurs="0"/>
+			<xs:element name="Email" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tCarrierID">
+		<xs:annotation>
+			<xs:documentation>This type is a restriction for the length of Carrier ID: from two to
+				four digit number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tOrderType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Spot Buy"/>
+			<xs:enumeration value="VMI">
+				<xs:annotation>
+					<xs:documentation>VMI stands for Vendor managed inventory.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tOrderLogic">
+		<xs:sequence>
+			<xs:element name="MinimumOrder" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="IsNestingRequired" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Nesting or multing is required? Multing is the function that
+						combines the lengths of like materials together, such as wide flange beams,
+						angles, flat bar, round bar, channels, and tube steel. Nesting is combining
+						like plates together to form the most economical cut for the material.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Restock" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="IsRestock" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>The answer for this element, restock, can be Yes
+									or No.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RestockCode" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NumberPerBundle" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="MinimumShippingWeight" type="tWeight" minOccurs="0"/>
+			<xs:element name="MinimumTruckFrieghtWeight" type="tWeight" minOccurs="0"/>
+			<xs:element name="MinimumRailFreightWeight" type="tWeight" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tMaterialCustomer">
+		<xs:sequence>
+			<xs:element name="OpportunityIdentifier" type="xs:token" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element is an indentifier for PO (which captures the
+						history of the transaction).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RFQNumber" type="xs:token" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This number is used in RFQ in order to keep track of
+						materials requested by different customers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tFulfillment">
+		<xs:sequence>
+			<xs:element name="Rolling" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="InInventory" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tOrderStatus">
+		<xs:sequence>
+			<xs:element name="OrderPrepared" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date for beginning status, which
+						is the only status that does not involve a transmittal between business
+						parties.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderSent" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date for order sent to vendors.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderReceived" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when the vendor sends their
+						acknowledgement to the customer that they have received their order.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderCommitted" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when the vendor sends their
+						acknowledgement back to customer they have accepted the order.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderCancelled" type="tDateWithReasons" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>When a customer sends a request to a vendor to cancel the
+						order, this element contains the date of and reason for cancellation.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellationConfirmed" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when a vendor accepts and
+						sends cancel confirmation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderDeclined" type="tDateWithReasons" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vendor sends Acknowledgement back to a customer they cannot
+						fulfill an order. This element contains the date and the reason of an order
+						declined</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnableToPlace" type="tBooleanWithReasons" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a reason for an order declined. Also, this element
+						contains Yes/No and the reason of infeasible placement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Loaded" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when all or parts of an order
+						are loaded onto a carrier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Shipped" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when a carrier leaves a
+						vendor with all or parts of an order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Delivered" type="xs:date" minOccurs="0"/>
+			<xs:element name="Received" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when a customer accepts a
+						BOL.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceiptRefuse" type="tBooleanWithReasons" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes the date when a customer refuses a
+						BOL.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tShipMethod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Truck"/>
+			<xs:enumeration value="Rail"/>
+			<xs:enumeration value="Barge"/>
+			<xs:enumeration value="Transload">
+				<xs:annotation>
+					<xs:documentation>This element can include multi-methods for shipping such as a
+						truck and a rail.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- SUBLEAVES -->
+	<xs:complexType name="tDateWithReasons">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date"/>
+			<xs:element name="Reason" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element contains reasons for either an order
+						cancellation and declination, inability to place the order, or receipt
+						refusal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tBooleanWithReasons">
+		<xs:sequence>
+			<xs:element name="IsTrue" type="xs:boolean"/>
+			<xs:element name="Reason" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This is a reason for an order declined. Also, this element
+						contains Yes/No and the reason of infeasible placement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- HEADER END -->
+	<!-- part 1 end -->
+	<!-- BODY -->
+	<xs:complexType name="tBody">
+		<xs:annotation>
+			<xs:documentation>This element is designed to contain multiple orders.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Orders" type="tOrders" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element is designed to contain multiple orders.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tOrders">
+		<xs:sequence>
+			<xs:element name="Order" type="tOrder" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element represents order information and item
+						specification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tOrder">
+		<xs:sequence>
+			<xs:element name="OrderInformation" type="tOrderInformation" minOccurs="0"/>
+			<xs:element name="Item" type="tItem" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The Item element depicts detailed item specification.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM -->
+	<xs:complexType name="tItem">
+		<xs:sequence>
+			<!-- ASN -->
+			<xs:element name="ItemURN" type="tItemURN" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element limits the uniform resource name of an item to
+						between 10 and 40 digits.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUIDs" type="tGuids" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Globally Unique IDentifier, also known as UUID (Universally
+						Unique IDentifier, is a 128-bit number used to identify information in
+						computer systems.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomerPurchaseOrder" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>customer's generated PO number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomerPurchaseOrderLine" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Customer generated PO Line number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Qty" type="tOrderUnit" minOccurs="0"/>
+			<xs:element name="CustomerProductCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="Length" type="tLength" minOccurs="0"/>
+			<xs:element name="Width" type="tLength" minOccurs="0"/>
+			<xs:element name="Weight" type="tWeightWithQualifier" minOccurs="0"/>
+			<xs:element name="Thickness" type="tLength" minOccurs="0"/>
+			<!-- END_ASN -->
+			<xs:element name="Materials" type="tMaterial" minOccurs="0"/>
+			<xs:element name="Projects" type="tMaterialProject" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element contains a Project ID and a name using
+						materials.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sequence" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element describes a Phase or a Sequence.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalFile" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element describes the URI of an extra file that provides
+						item information to a service center in order to perform additional
+						services, such as cut or drill.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Shape" type="xs:token" minOccurs="0"/>
+			<xs:element name="Size" type="xs:token" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Size can be either free text description or structured text
+						according to the standard. Preferred implementation is to use structured
+						text, use free text description only when standard is not
+						predefined.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Grade" type="tGrade" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element allows users to choose grade types from the
+						predefined grade list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplierURN" type="tSupplierURN" minOccurs="0"/>
+			<xs:element name="Service" type="tService" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Service element illustrates information for additional
+						processing or treatment of items like finishes (blast and paint) or
+						pre-processing (CTL and drilled).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplementalRequirements" type="tSupplementalRequirements"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The element can contain supplemental requirements that
+						customers demand with regard to quality/specification, domestic material,
+						and recycled content.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Schedule" type="tSchedule" minOccurs="0"/>
+			<xs:element name="PricingInformation" type="tPricingInformation" minOccurs="0"/>
+			<xs:element name="Notes" type="xs:string" minOccurs="0"/>
+			<!-- ASN -->
+			<xs:element name="Heat" type="tGeneralInformation" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The Heat element includes production information like the
+						date produced, heat ID, supplier comments, and equivalent grades.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommentForItem" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element mentions additional information for an
+						item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tGuids">
+		<xs:annotation>
+			<xs:documentation>Item element may represent mulitple objects(pieces) in model based
+				exchange, especially when there are many objects with the same
+				itemURN.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GUID" type="tGuid" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tGuid">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> The representation of a GUID, Globally Unique
+				Identifier or Universally unique identifier (UUID), generally the unique id
+				associated in model based exchange as in IFC</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+			/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tMaterial">
+		<xs:sequence>
+			<xs:element name="PreliminaryPieceMarks" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element is a preliminary identification number that
+						distinguishes a piece of the steel or other assembly material.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FinalPieceMarks" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element is a defined identification number of steel
+						materials. Final piece marks can follow a code that describes an iron
+						worker, an exact area, a level, and a location of the piece of a steel.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceivingLocation" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element contains the specific delivery location of the
+						steel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BundleOrPieceTagNumber" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element includes dimensions, steel grades, surface
+						conditions, bundle sizes, batch ids, coil numbers, and bundle numbers.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tMaterialProject">
+		<xs:sequence>
+			<xs:element name="ProjectID" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The identification number for Project</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProjectName" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A name of a project</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_SERVICE -->
+	<xs:complexType name="tService">
+		<xs:sequence>
+			<xs:element name="Finish" type="tFinish" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The material finish type could be one of followings: Blast,
+						Paint, Galvanizing, PowderCoated, MixedCoating, or RustInhibitor.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreProcessing" type="tPreProcessing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The material finish type could be either Blast, Paint,
+						Galvanizing, PowderCoated, MixedCoating, or RustInhibitor.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_SUPPLEMENTALREQUIREMENTS -->
+	<xs:complexType name="tSupplementalRequirements">
+		<xs:sequence>
+			<xs:element name="QualitySpecification" type="tQualitySpecification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents detailed specifications for the
+						quality of steel, such as Charpy V-Notch tests, and tolerances.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DomesticMaterial" type="tDomesticMaterial" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element states whether or not the steel is domestic
+						(Made in America).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecycledContent" type="tRecycledContent" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This field describes the percentage of recycled materials in
+						the steel, in terms of preconsumer, postconsumer, and revert contents.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_SCHEDULE -->
+	<xs:complexType name="tSchedule">
+		<xs:sequence>
+			<xs:element name="RespondByDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the requested due date and time for
+						responding for RFQ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NeedDeliveryDateTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the requested due date and time.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AvailableDate" type="tAvailableDate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Based on order specifications and factory processes, this
+						element shows the possible delivery date and time of steel.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ActualDate" type="tActualDate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element consists of actual shipt date and receipt dates
+						and represents the actual date and time when the steel is shipped.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_PRICINGINFORMATION -->
+	<xs:complexType name="tPricingInformation">
+		<xs:sequence>
+			<xs:element name="MaterialPrice" type="tMaterialPrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element lists the detailed prices for materials
+						including base price per unit, surcharge, and extra.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FreightPrice" type="tFreightPrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element lists the fees regarding base freight price,
+						surcharge, and supplementary charge. It also includes FOB point and freight
+						method.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreprocessingPrice" type="tPreprocessingPrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Diverse types of supplemental prices can be contained, such
+						as preprocessing, packaging, CTL, SPC, finishes and tarping.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_GENERALINFORMATION -->
+	<xs:complexType name="tGeneralInformation">
+		<xs:sequence>
+			<xs:element name="DateProduced" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows production dates of specific materials.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeatID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A heat number is an identification number that is stamped on
+						a material plate after it is removed from the ladle and rolled at a steel
+						mill. This heat ID is the only way to trace a steel plate back to its Mill
+						Sheet. A heat number is similar to a lot number, which is used to identify
+						production runs of any other product for quality control purposes.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeatIDIdentifier" type="tHeatID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>An identification number consists a LotorReheat number and a
+						slab ID.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Qty" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>This element represents the number of items ordered.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Producer" type="tProducer">
+				<xs:annotation>
+					<xs:documentation>This element represents producer information such DUNs, name,
+						and Prouder Item URN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplierComments" type="tSupplierComments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is supplementary information provided by suppliers.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Equivalentgrades" type="xs:token" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows equivalent grades of the specified one.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestReportReference" type="tTestReportReference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element presents the test report information, including
+						reference number and an attachment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestResults" type="tProperties" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents the chemical and mechanical
+						properties of an item. The detailed specifications are added onto the lower
+						components of elements.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestMemo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is additional information to further inform buyers and
+						other experts of any comments for a material test.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTestReportReference">
+		<xs:sequence>
+			<xs:element name="ReferenceNumber" type="xs:string"/>
+			<xs:element name="Attachment" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_TestResults -->
+	<xs:complexType name="tProperties">
+		<xs:sequence>
+			<xs:element name="ChemicalProperties" type="tChemicalProperties" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The chemical test shows the chemical composition of basic
+						elements include carbon, manganese, phosphorus, sulfur, silicon, copper,
+						nickel, chromium, molybdenum, aluminum, and tin. Additional elements might
+						also be included in the program.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MechanicalProperties" type="tMechanicalProperties" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents a set of mechanical test values.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tGrade">
+		<xs:annotation>
+			<xs:documentation>tGrade can be either a free text field or further specified with
+				attributes. In case of 'free text field', the value can be populated as 'ASTM
+				A572/A572M, Grade 50, Type 1' and to be processed accordingly by importing software.
+				When attributes are supplied, grade value should use the designation as specified in
+				the corresponding standard. The previous example should use 'A572/A572M' for element
+				value as apprears as 'designation' in the ASTM standard. SO attribute field
+				indicates a standards organization, such as 'ASTM'. Year attribute field indicates
+				the year of original adoption or the year of last revision in the case of revision.
+				The year attribute field may have superscript epsilion indicates an editorial
+				change, such as '13a'. A grade specification may have multiple grades specified in
+				the standard as in 'A572/A572M', which should use SubGrade attribute to further
+				indicates grade. i.e. Grade 50, Grade 60 and etc. A grade may have a type based on
+				contents of elements, which may use GradeType attribute field. i.e. Type 1, Type 2
+				and etc.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:token">
+				<xs:attribute name="SO" type="xs:token">
+					<xs:annotation>
+						<xs:documentation>Standard Organization</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="Year" type="xs:token"/>
+				<xs:attribute name="SubGrade" type="xs:token"/>
+				<xs:attribute name="GradeType" type="xs:token"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="tItemURN">
+		<xs:annotation>
+			<xs:documentation>This element represents an uniform resource name of an item as 10 to
+				40 digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10" fixed="true"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ****************  Level 3  ********************* -->
+	<xs:complexType name="tQualitySpecification">
+		<xs:sequence>
+			<xs:element name="CVNTesting" type="tCVNTesting" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains Charpy test result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecificTolerances" type="tSpecificTolerances" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains boolean values for tolerances, such as
+						Military, ABSCertification, or Chemistries_1035_1045.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DetailedQualitySpecification" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains additional information to represent the
+						quailty of specification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCVNTesting">
+		<xs:sequence>
+			<xs:element name="SpecifiedTemperature" type="tTemperature" minOccurs="0"/>
+			<xs:element name="SpecifiedAbsorbedEnergy" type="tEnergy" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tSpecificTolerances">
+		<xs:sequence>
+			<xs:element name="Military" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ABSCertification" type="tABSCertification" minOccurs="0"/>
+			<xs:element name="Chemistries_1035_1045" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tDomesticMaterial">
+		<xs:sequence>
+			<xs:element name="BuyAmerican" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DomesticOnly" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tRecycledContent">
+		<xs:sequence>
+			<xs:element name="TotalRecycledContent" type="tPercent" minOccurs="0"/>
+			<xs:element name="PreconsumerContent" type="tPercent" minOccurs="0"/>
+			<xs:element name="PostconsumerContent" type="tPercent" minOccurs="0"/>
+			<xs:element name="RevertContent" type="tPercent" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- *********************  2.0 SCHEDULE INFORMATION 3  ********************* -->
+	<xs:complexType name="tAvailableDate">
+		<xs:sequence>
+			<xs:element name="Rolling" type="tRolling" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the available dates for the rolling
+						schedule, which includes the current, next, and order casting dates.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FromInventory" type="tFromInventory" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element contains the date when materials will be
+						available from inventory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EstimatedDate" type="tEstimatedDate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tRolling">
+		<xs:sequence>
+			<xs:element name="CurrentRollingDate" type="tCurrentRollingDate" minOccurs="0"/>
+			<xs:element name="NextRollingDate" type="tNextRollingDate" minOccurs="0"/>
+			<xs:element name="OrderCastingDate" type="xs:date" minOccurs="0"/>
+			<xs:element minOccurs="0" name="RollingID" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCurrentRollingDate">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date" minOccurs="0"/>
+			<xs:element name="IsNextRollOpen" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="QuantityAvailable" type="tQuantityAvailable" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tNextRollingDate">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date" minOccurs="0"/>
+			<xs:element name="IsFutureRollOpen" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="QuantityAvailable" type="tQuantityAvailable" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tFromInventory">
+		<xs:sequence>
+			<xs:element name="AFSQuantityAvailable" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="ScheduledAFSQuantity" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tEstimatedDate">
+		<xs:sequence>
+			<xs:element name="EstimatedShipDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="EstimatedReceiptDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tActualDate">
+		<xs:sequence>
+			<xs:element name="ActualShipDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="ReceiptDates" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- *********************  3.0 PRICING INFORMATION ********************* -->
+	<!-- **************************     1.0 PRODUCT/SERVICES INFORMATION     ************************** -->
+	<!-- ITEM_PRODUCT_SERVICE_FINISH -->
+
+
+	<xs:simpleType name="tFinishType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Blast"/>
+			<xs:enumeration value="Paint"/>
+			<xs:enumeration value="Galvanizing"/>
+			<xs:enumeration value="PowderCoated"/>
+			<xs:enumeration value="MixedCoating"/>
+			<xs:enumeration value="RustInhibitor"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="tFinish">
+		<xs:sequence>
+			<xs:element name="FinishType" type="tFinishType" minOccurs="1"/>
+			<xs:element name="Specification" type="xs:string" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This element presents additional comments on finish type
+						specifications.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ITEM_PRODUCT_SERVICE_PREPROCESSING -->
+	<xs:complexType name="tPreProcessing">
+		<xs:sequence>
+			<xs:element name="CutToLength" type="tCutToLength" minOccurs="0"/>
+			<xs:element name="Cambered" type="tLengthAndAdditionalInfo" minOccurs="0"/>
+			<xs:element name="Holes" type="tHoles" minOccurs="0"/>
+			<xs:element name="SplittingTee" type="tSplittingTee" minOccurs="0"/>
+			<xs:element name="CutToSize" type="tCutTosize" minOccurs="0"/>
+			<xs:element name="AdditionalServices" type="tAdditionalServicesRequired" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCutToLength">
+		<xs:sequence>
+			<xs:element name="DeliverCutToLength" type="tLogical" minOccurs="0"/>
+			<xs:element name="NestedItem" type="tNestedItem" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AdditionalInformation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tLogical">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="undefined"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tNestedItem">
+		<xs:sequence>
+			<xs:element name="NestingItemURN" type="tItemURN" minOccurs="0"/>
+			<xs:element name="NestedItemQty" type="tOrderUnit" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- **************************    6.0 PRODUCTION INFORMATION     ************************** -->
+	<xs:complexType name="tHeatID">
+		<xs:sequence>
+			<xs:element name="LotorReheatNo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lot or Reheat Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SlabID" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tProducer">
+		<xs:sequence>
+			<!-- ASN -->
+			<xs:element name="ProducerDUNS">
+				<xs:annotation>
+					<xs:documentation>This element contains a 9 digit Data Universal Numbering
+						System (DUNS).</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element ref="Country"/>
+			<xs:element name="ProducerItemURN" minOccurs="0" type="xs:string"/>
+			<!-- END ASN -->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tSupplierComments">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tChemicalProperties">
+		<xs:sequence>
+			<xs:element name="Elements" type="tElements" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element lists composing elements of material
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CalculatedValues" type="tCalculatedValues" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element allows mulpiple values of elements.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tElements">
+		<xs:sequence>
+			<xs:element name="Element" type="tElement" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tElement">
+		<xs:sequence>
+			<xs:element name="ElementCode" type="tElementCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This field provides predefined codes of elements that users
+						can choose from.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasuredValue" type="tPercent" minOccurs="0"/>
+			<xs:element name="AnalysisType" type="tAnalysisType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element is the analysis type used for measuring the
+						value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCalculatedValues">
+		<xs:sequence>
+			<xs:element name="CalculatedValue" type="tCalculatedValue" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This field lists the calculated value of chemical properties.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCalculatedValue">
+		<xs:sequence>
+			<xs:element name="FormulaName" type="xs:string"/>
+			<xs:element name="FormulaCode" type="xs:string"/>
+			<xs:element name="FormulaExpression" type="xs:string"/>
+			<xs:element name="MeasuredValue" type="xs:decimal"/>
+			<xs:element name="AnalysisType" type="tAnalysisType">
+				<xs:annotation>
+					<xs:documentation>This element is the analysis type used for measuring the
+						value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tMechanicalProperties">
+		<xs:sequence>
+			<xs:element name="TensileTests" type="tTensileTests" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element lists the tensile testing results.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CharpyV-notchTests" type="tCharpyV-notchTests" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element lists the Charpy V notch test results.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTensileTests">
+		<xs:sequence>
+			<xs:element name="TensileTest" type="tTensileTest" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTensileTest">
+		<xs:sequence>
+			<xs:element name="TestingStandard" type="tTestingStandard" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TestingStandard is an enumeration value, such as ASTM A370,
+						ASTM A673, or AASHTO M160.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestingConditions" type="tTestingConditions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element describes testing conditions including location,
+						specimen type, and yield determination.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestResult" type="tTensileTestResult" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>This element represents the results of a tensile test
+						including yield strength, UTS-value, elongation, and reduction of area.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTestingConditions">
+		<xs:sequence>
+			<xs:element name="SpecimenLocation" type="xs:string" minOccurs="0"/>
+			<xs:element name="SpecimenType" type="xs:string" minOccurs="0"/>
+			<xs:element name="SampleGageLength" type="tLength" minOccurs="0"/>
+			<xs:element name="YieldDetermination" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCharpyV-notchTests">
+		<xs:sequence>
+			<xs:element name="CharpyV-notchTest" type="tCharpyV-notchTest" minOccurs="0"
+				maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCharpyV-notchTest">
+		<xs:sequence>
+			<xs:element name="TestingStandard" type="tTestingStandard" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element gives an enumeration value, such as ASTM A370,
+						ASTM A673, or AASHTO M160.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestingRegime" type="tTestingRegime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents one of the enumeration values, such
+						as minimum Specified Energy and FATT.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Specimens" type="tSpecimens" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element allows for multiple specimens.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AveragedResults" type="tAveragedResults" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tSpecimens">
+		<xs:sequence>
+			<xs:element name="Specimen" type="tSpecimen" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tSpecimen">
+		<xs:sequence>
+			<xs:element name="SpecimenConditions" type="tSpecimenConditions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents additional information on specimen
+						conditions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestResult" type="tCharpyTestResult" minOccurs="0"
+				maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tSpecimenConditions">
+		<xs:sequence>
+			<xs:element name="SpecimenLocation" type="xs:string" minOccurs="0"/>
+			<xs:element name="SpecimenSize" type="xs:string" minOccurs="0"/>
+			<xs:element name="SpecimenOrientation" type="xs:string" minOccurs="0"/>
+			<xs:element name="NotchShape" type="xs:string" minOccurs="0"/>
+			<xs:element name="TestTemperature" type="tTemperature" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCharpyTestResult">
+		<xs:sequence>
+			<xs:element name="Energy" type="tEnergy" minOccurs="0"/>
+			<xs:element name="UncorrectedEnergy" type="tEnergy" minOccurs="0"/>
+			<xs:element name="Shear" type="tPercent" minOccurs="0"/>
+			<xs:element name="LateralExpansion" type="tLengthPercent" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tAveragedResults">
+		<xs:sequence>
+			<xs:element name="TestResult" type="tCharpyTestResult" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- End of  6.0 PRODUCTION INFORMATION -->
+	<xs:complexType name="tABSCertification">
+		<xs:sequence>
+			<xs:element name="ABSType" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AH36" type="xs:boolean"/>
+						<xs:element name="AH32" type="xs:boolean"/>
+						<xs:element name="A" type="xs:boolean"/>
+						<xs:element name="CharpyImpactRequirements" type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tMaterialPrice">
+		<xs:sequence>
+			<xs:element name="BasePrice" type="tBasePriceUnit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Base price can be represented by currency and a different
+						UOM, such as T, LB, KG, MT, and CWN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SurchargePrice" type="tSurchargePrice" minOccurs="0"/>
+			<xs:element name="Extras" type="tExtras" minOccurs="0"/>
+			<xs:element name="Terms" type="tTerms" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tBasePriceUnit">
+		<xs:simpleContent>
+			<xs:extension base="tCurrency">
+				<xs:attribute name="UOM">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="T"/>
+							<xs:enumeration value="LB"/>
+							<xs:enumeration value="KG"/>
+							<xs:enumeration value="MT"/>
+							<xs:enumeration value="CWT"/>
+							<xs:enumeration value="EA"/>
+							<xs:enumeration value="FT"/>
+							<xs:enumeration value="M"/>
+							<xs:enumeration value="SQFT"/>
+							<xs:enumeration value="SQM"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tSurchargePrice">
+		<xs:sequence>
+			<xs:element name="RawMaterial" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="SupplimentalMaterial" type="tBasePriceUnit" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tExtras">
+		<xs:sequence>
+			<xs:element name="Grade" type="tGradePrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows price information for a type of a grade.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tolerance" type="tTolerance" minOccurs="0"/>
+			<xs:element name="MillProcessing" type="tMillProcessing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows price information for a type of a grade.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quality" type="tQuality" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tGradePrice">
+		<xs:sequence>
+			<xs:element name="GradeType" type="xs:string" minOccurs="0"/>
+			<xs:element name="CostValue" type="tBasePriceUnit" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTolerance">
+		<xs:sequence>
+			<xs:element name="Column" type="tBasePriceUnit" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tMillProcessing">
+		<xs:sequence>
+			<xs:element name="Cutting" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="ExactPieceCount" type="tBasePriceUnit" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tQuality">
+		<xs:sequence>
+			<xs:element name="Military" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="ABS" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="CVN" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="Nuclear" type="tBasePriceUnit" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTerms">
+		<xs:sequence>
+			<xs:element name="Firm" type="tFirm" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>indicate how long the price is valid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EffectiveOnShipDate" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ProjectSpecific" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="SubjectToPriorSale" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="EffectiveAtTimeOfOrder" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tFreightPrice">
+		<xs:sequence>
+			<xs:element name="BaseFreightPrice" type="tFreightBasePrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element presents the price of a type of freight, such as
+						a load, a mile, a weight, or an hour.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SurchargePrice" type="tFreightBasePrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the fuel price depending on the type.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplimentaryFreightPrice" type="tSupplimentaryFreightPrice"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element presents the tarping and container price.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FOBPoint" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element shows the Free On Board (FOB) point.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Method" type="tMethod" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element lists types of shipping, such as a truck, rail,
+						barge, or transload.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tPreprocessingPrice">
+		<xs:sequence>
+			<xs:element name="CutToLengthPrice" type="tPreprocessingPriceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element represents the Cut to Length (CTL), or per cut
+						and unit price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CamberedPrice" type="tPreprocessingPriceType" minOccurs="0"/>
+			<xs:element name="HolesDrillPrice" type="tPreprocessingPriceType" minOccurs="0"/>
+			<xs:element name="HolesPunchPrice" type="tPreprocessingPriceType" minOccurs="0"/>
+			<xs:element name="HolesBurnPrice" type="tPreprocessingPriceType" minOccurs="0"/>
+			<xs:element name="SplitingTeesPrice" type="tPreprocessingPriceType" minOccurs="0"/>
+			<xs:element name="CutTosizesPrice" type="tPreprocessingPriceType" minOccurs="0"/>
+			<xs:element name="AdditionalServicesRequiredPrice" type="tPreprocessingPriceType"
+				minOccurs="0"/>
+			<xs:element name="BrokenBundles" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="SPC" type="tBasePriceUnit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Special Protective Coating</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Finishes" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="Tarping" type="tBasePriceUnit" minOccurs="0"/>
+			<xs:element name="BuyerNotes" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SellerNotes" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tPreprocessingPriceType">
+		<xs:sequence>
+			<xs:element name="Quantity" type="tQuantityAvailable" minOccurs="0"/>
+			<xs:element name="Price" type="tCurrency" minOccurs="0"/>
+			<xs:element name="NotesBuyer" type="xs:string" minOccurs="0"/>
+			<xs:element name="NotesSeller" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tTensileTestResult">
+		<xs:sequence>
+			<xs:element name="YieldStrength" type="tStress" minOccurs="0"/>
+			<xs:element name="UTS-Value" type="tStress" minOccurs="0"/>
+			<xs:element name="Elongation" type="tPercent" minOccurs="0"/>
+			<xs:element name="ReductionOfArea" type="tPercent" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCutTosize">
+		<xs:annotation>
+			<xs:documentation>This element shows the Cut To size, which has two mandatory
+				attributes: Type and UOM.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="X_Dimensions" type="tLength" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Y_Dimensions" type="tLength" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AddtionalInformation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tHoles">
+		<xs:sequence>
+			<xs:element name="Hole" type="tHole" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tHole">
+		<xs:sequence>
+			<xs:element name="CuttingMethod" type="tCuttingMethod" minOccurs="1"/>
+			<xs:element name="HoleDiameter" type="tLength" minOccurs="1"/>
+			<xs:element name="HoleLocation" type="tHoleLocation" minOccurs="1"/>
+			<xs:element name="AddtionalInformation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tCuttingMethod">
+		<xs:annotation>
+			<xs:documentation>This field includes information on whether a material is drilled or
+				punched, including hole diameter and location.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="drill"/>
+			<xs:enumeration value="punch"/>
+			<xs:enumeration value="burn"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tHoleLocation">
+		<xs:annotation>
+			<xs:documentation>Hole location can be either on flange or on web.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="flang"/>
+			<xs:enumeration value="web"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tSplittingTee">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Centered" type="xs:boolean" fixed="true"/>
+				<xs:element name="AddtionalInformation" type="xs:string" minOccurs="0"/>
+				<xs:sequence>
+					<xs:element name="OffCentered" type="xs:boolean" fixed="true"/>
+					<xs:element name="AddtionalInformation" type="xs:string" minOccurs="1"/>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tDateTimeComplex">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date" minOccurs="0"/>
+			<xs:element name="Time" type="xs:time" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--  Leaves  -->
+	<xs:simpleType name="tSupplierURN">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10" fixed="true"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tFirm">
+		<xs:sequence>
+			<xs:element name="Duration" type="xs:duration" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Firm" type="xs:boolean" use="required"/>
+	</xs:complexType>
+
+	<xs:simpleType name="tTestingRegime">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Minimum Specified Energy"/>
+			<xs:enumeration value="FATT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tAnalysisType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Heat Analysis"/>
+			<xs:enumeration value="Product Check Analysis"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tTestingStandard">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ASTM A370"/>
+			<xs:enumeration value="ASTM A673"/>
+			<xs:enumeration value="AASHTO M160"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tQuantityAvailable">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="Type" type="xs:string"/>
+				<xs:attribute name="UOM" type="tUomPcCwt" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- commontypes -->
+	<xs:complexType name="tLengthAndAdditionalInfo">
+		<xs:sequence>
+			<xs:element name="Length" type="tLength" minOccurs="1"/>
+			<xs:element name="AdditionalInformation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tLength">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" type="tUomLength">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="tUomLength">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="in"/>
+			<xs:enumeration value="ft"/>
+			<xs:enumeration value="mm"/>
+			<xs:enumeration value="m"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomDistance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="km"/>
+			<xs:enumeration value="mi"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tAdditionalServicesRequired">
+		<xs:sequence>
+			<xs:element name="Explanation" type="xs:string" minOccurs="0"/>
+			<xs:element name="AdditionalInformationAttached" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tWeight">
+		<xs:annotation>
+			<xs:documentation>Weight is weight of the item, including its quantity: For example, if
+				the item is 10 beams, then the weight is of 10 beams.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" type="tUomWeight" use="required">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="tUomWeight">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>Ton, 1 T = 2000 LB</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LB">
+				<xs:annotation>
+					<xs:documentation>Pound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KG">
+				<xs:annotation>
+					<xs:documentation>Kilo Gram</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MT">
+				<xs:annotation>
+					<xs:documentation>Tonne, 1 MT = 1000 KG</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CWT">
+				<xs:annotation>
+					<xs:documentation>hundredweight or centum weight, 1 CTW = 100
+						LB</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<!-- ASN -->
+			<!-- END ASN -->
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomPcCwt">
+		<xs:restriction base="tUomPcEaCwt">
+			<xs:enumeration value="Piece"/>
+			<xs:enumeration value="CWT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomPcEaCwt">
+		<xs:restriction base="tUomWeightCount">
+			<xs:enumeration value="Piece"/>
+			<xs:enumeration value="Each"/>
+			<xs:enumeration value="CWT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomCount">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Piece">
+				<xs:annotation>
+					<xs:documentation>PC stands for Per Piece. used for counting item.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Each">
+				<xs:annotation>
+					<xs:documentation>EA stands for Per Each, used for counting feature, such as
+						hole</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Load">
+				<xs:annotation>
+					<xs:documentation>Per Load, such as truck load</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomTime">
+		<xs:annotation>
+			<xs:documentation>Time related unit measure</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hour"/>
+			<xs:enumeration value="Day"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomLengthWeightCount">
+		<xs:annotation>
+			<xs:documentation>This union type includes the types of several units for weight,
+				length, and count.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="tUomLength tUomWeight tUomCount"/>
+	</xs:simpleType>
+	<xs:simpleType name="tUomWeightCount">
+		<xs:annotation>
+			<xs:documentation>This union type includes weight and count unit types.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="tUomWeight tUomCount"/>
+	</xs:simpleType>
+	<xs:complexType name="tOrderUnit">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" type="tUomLengthWeightCount"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tWeightWithQualifier">
+		<xs:simpleContent>
+			<xs:extension base="tWeight">
+				<xs:attribute name="WeightQualifier" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Actual"/>
+							<xs:enumeration value="Theoretical"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tTemperature">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" use="required">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="F"/>
+							<xs:enumeration value="C"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tPercent">
+		<xs:annotation>
+			<xs:documentation>This element describes the percent, which can be represented by one of
+				two types: percent and percent by weight.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" use="required">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Percent"/>
+							<xs:enumeration value="Percent by Weight"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="tPercentEnum">
+		<xs:annotation>
+			<xs:documentation>This element describes the percent, which could be either percent or
+				percent by weight.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Percent"/>
+			<xs:enumeration value="Percent by Weight"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tUomLengthPercent">
+		<xs:annotation>
+			<xs:documentation>This union type includes the types of several units for length and
+				percent.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="tUomLength tPercentEnum"/>
+	</xs:simpleType>
+	<xs:complexType name="tLengthPercent">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" type="tUomLengthPercent" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tEnergy">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" use="required">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="J"/>
+							<xs:enumeration value="FT-LBS"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tStress">
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UOM" use="required">
+					<xs:annotation>
+						<xs:documentation>Unit of Measurement</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="PSI"/>
+							<xs:enumeration value="KSI"/>
+							<xs:enumeration value="MPA"/>
+							<xs:enumeration value="PA"/>
+							<xs:enumeration value="N/MM^2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tCurrency">
+		<xs:annotation>
+			<xs:documentation>This element describes the currency referenced from the currency code
+				schema.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="Currency" type="CurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tFreightBasePrice">
+		<xs:annotation>
+			<xs:documentation>This element describes the price based on the types of UOM and
+				currency.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="tCurrency">
+				<xs:attribute name="UOM" type="tUomDistanceWeightCountTime"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="tUomDistanceWeightCountTime">
+		<xs:union memberTypes="tUomDistance tUomWeight tUomCount tUomTime"/>
+	</xs:simpleType>
+	<xs:complexType name="tSupplimentaryFreightPrice">
+		<xs:sequence>
+			<xs:element name="Tarping" type="tFreightBasePrice"/>
+			<xs:element name="Crating_Container" type="tFreightBasePrice"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="tMethod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Truck"/>
+			<xs:enumeration value="Rail"/>
+			<xs:enumeration value="Barge"/>
+			<xs:enumeration value="Transload"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+</xs:schema>

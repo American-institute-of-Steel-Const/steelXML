@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="AISCProcurement" xmlns="AISCProcurement"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <xs:simpleType name="tElementCode">
+        <xs:annotation>
+            <xs:documentation>
+            <h1>Element Code version 0r43</h1>
+            <br/>
+            <br/>
+            <br/>
+            <p>This field provides predefined codes of elements so that users can
+                choose one.</p>
+                </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CHS114.3/3.6"/>
+            <xs:enumeration value="Al (sol)">
+                <xs:annotation>
+                    <xs:documentation>Aluminium (Acid Soluble)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Al">
+                <xs:annotation>
+                    <xs:documentation>Aluminium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="As">
+                <xs:annotation>
+                    <xs:documentation>Arsenic</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="B">
+                <xs:annotation>
+                    <xs:documentation>Boron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+                <xs:annotation>
+                    <xs:documentation>Carbon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ca">
+                <xs:annotation>
+                    <xs:documentation>Calcium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cb">
+                <xs:annotation>
+                    <xs:documentation>Columbium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ce">
+                <xs:annotation>
+                    <xs:documentation>Celerium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Co">
+                <xs:annotation>
+                    <xs:documentation>Cobolt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cr">
+                <xs:annotation>
+                    <xs:documentation>Chromium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cu">
+                <xs:annotation>
+                    <xs:documentation>Copper</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fe">
+                <xs:annotation>
+                    <xs:documentation>Iron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+                <xs:annotation>
+                    <xs:documentation>Hydrogen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mn">
+                <xs:annotation>
+                    <xs:documentation>Manganese</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mo">
+                <xs:annotation>
+                    <xs:documentation>Molybdenum</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N">
+                <xs:annotation>
+                    <xs:documentation>Nitrogen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Nb">
+                <xs:annotation>
+                    <xs:documentation>Niobium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ni">
+                <xs:annotation>
+                    <xs:documentation>Nickel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+                <xs:annotation>
+                    <xs:documentation>Oxygen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+                <xs:annotation>
+                    <xs:documentation>Phosphorus</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Pb">
+                <xs:annotation>
+                    <xs:documentation>Lead</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+                <xs:annotation>
+                    <xs:documentation>Sulfur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sb">
+                <xs:annotation>
+                    <xs:documentation>Antimony</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Si">
+                <xs:annotation>
+                    <xs:documentation>Silicon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sn">
+                <xs:annotation>
+                    <xs:documentation>Tin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ti">
+                <xs:annotation>
+                    <xs:documentation>Titanium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+                <xs:annotation>
+                    <xs:documentation>Vanadium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="W">
+                <xs:annotation>
+                    <xs:documentation>Tungsten</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Zn">
+                <xs:annotation>
+                    <xs:documentation>Zinc</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
