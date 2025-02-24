@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://www.aisc.org/globalassets/aisc/steelxml/steelXML.xsl"?>
+<!--<?xml-stylesheet type="text/xsl" href="steelXML.xsl"?>-->
+
+<xs:schema targetNamespace="AISCProcurement" xmlns="AISCProcurement"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <xs:annotation>
+        <xs:documentation>
+            <h1>Payment sub schema</h1>
+            <br/>
+            <br/>
+            <br/>
+            <h1>Revision History </h1>
+            <h2>version 1r00</h2>
+            <ul>
+                <li>Version added as required element.</li>
+            </ul>
+            <h2>version 0r44</h2>
+            <ul>
+                <li>Updated Baseline Schema version and URL</li>
+            </ul>
+            <h2>version 0r43</h2>
+            <ul>
+                <li>First Release</li>
+            </ul>
+        </xs:documentation>
+    </xs:annotation>
+  <xs:include schemaLocation="Baseline.xsd"/>
+
+    <xs:element name="Payment" type="tBL"/>
+
+    <xs:complexType name="tBL">
+        <xs:complexContent>
+            <xs:restriction base="tProcurement">
+                <xs:sequence>
+                    <xs:element name="Version" type="tVersion" minOccurs="1"/>
+                    <xs:element name="Header" type="etHeader" minOccurs="1"/>
+                    <xs:element name="Body" type="etBody" minOccurs="1"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="etHeader">
+        <xs:complexContent>
+            <xs:restriction base="tHeader">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="BillOfLadingReference" type="xs:string"/>
+                    <xs:element minOccurs="0" name="TransactionDateTime" type="xs:dateTime"/>
+                    <xs:element name="SourceApplicationName" type="xs:string" minOccurs="0"
+                        maxOccurs="1"/>
+                    <xs:element name="SourceApplicationVersion" type="xs:string" minOccurs="0"
+                        maxOccurs="1"/>
+                    <xs:element name="Invoicing" type="etInvoicing" minOccurs="1"/>
+                    <xs:element minOccurs="0" name="ShipmentDateTime" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="OrderDueDate" type="xs:dateTime"/>
+                    <xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
+
+    <xs:complexType name="etInvoicing">
+        <xs:complexContent>
+            <xs:restriction base="tInvoicing">
+                <xs:sequence>
+                    <xs:element name="InvoiceIssued" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="InvoiceReceived" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="PaymentStatus" type="tPaymentStatus" minOccurs="0"/>
+                    <xs:element name="InvoiceNo" type="xs:string" minOccurs="0"/>
+                    <xs:element name="InvoiceLineNo" type="xs:string" minOccurs="1"/>
+                    <xs:element name="TotalInvoiced" type="tCurrency" minOccurs="1"/>
+                    <xs:element name="Subtotals" type="tSubtotals" minOccurs="1"/>
+                    <xs:element name="InvoiceDate" type="xs:dateTime" minOccurs="1"/>
+                    <xs:element name="DiscountAmount" type="tPriceWithDescription" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                    <xs:element name="DiscountDeadlineDate" type="xs:dateTime" minOccurs="0"/>
+                    <xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"
+                    />
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="eSubtotals">
+        <xs:complexContent>
+            <xs:restriction base="tSubtotals">
+                <xs:sequence>
+                    <xs:element name="BasePrice" type="etPriceWithSurcharges" minOccurs="1"/>
+                    <xs:element name="Freight" type="etPriceWithSurcharges" minOccurs="1"
+                        maxOccurs="unbounded"/>
+                    <xs:element name="SupplementalPrices" type="tPriceWithDescription" minOccurs="1"
+                        maxOccurs="unbounded"/>
+                    <xs:element name="Tax" type="tPriceWithDescription" minOccurs="1"
+                        maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="etPriceWithSurcharges">
+        <xs:complexContent>
+            <xs:restriction base="tPriceWithSurcharges">
+                <xs:sequence>
+                    <xs:element name="Price" type="tCurrency" minOccurs="1"/>
+                    <xs:element name="Surcharge" type="etSurcharge" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="etSurcharge">
+        <xs:complexContent>
+            <xs:restriction base="tSurcharge">
+                <xs:sequence>
+                    <xs:element name="Description" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Price" type="tCurrency" minOccurs="1"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+    <!-- BODY -->
+    <!-- BODY -->
+    <!-- BODY -->
+
+    <xs:complexType name="etBody">
+        <xs:complexContent>
+            <xs:restriction base="tBody">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" name="Orders" type="etOrders"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="etOrders">
+        <xs:complexContent>
+            <xs:restriction base="tOrders">
+                <xs:sequence>
+                    <xs:element maxOccurs="1" name="Order" type="etOrder"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="etOrder">
+        <xs:complexContent>
+            <xs:restriction base="tOrder">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Item" type="etItem"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="etItem">
+        <xs:complexContent>
+            <xs:restriction base="tItem">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Sequence" type="xs:string"/>
+                    <xs:element name="AdditionalFile" minOccurs="0" maxOccurs="unbounded"
+                        type="xs:anyURI"/>
+                    <xs:element name="CommentForItem" type="tItemCommentLength" minOccurs="0"
+                        maxOccurs="1"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>
